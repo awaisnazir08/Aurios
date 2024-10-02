@@ -4,8 +4,7 @@ const DashboardPage = () => {
     return (
         <>
             <div>
-                <p>Landing Page(Protected)</p>
-                <UserButton />
+                <p>Dashboard Page(Protected)</p>
             </div>
         </>
     )
