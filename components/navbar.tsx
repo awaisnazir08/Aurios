@@ -1,13 +1,10 @@
-import { Button } from "@/components/ui/button";
 import { UserButton } from "@clerk/nextjs";
-import { Ghost, Menu } from "lucide-react";
+import MobileSidebar from "@/components/ui/mobile-sidebar";
 
 const Navbar = () => {
     return (
         <div className="flex items-center p-4">
-            <Button variant='ghost' size='icon' className="md:hidden">
-                <Menu />
-            </Button>
+            <MobileSidebar/>
             <div className="flex w-full justify-end ">
                 <UserButton/>
             </div>
