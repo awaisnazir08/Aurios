@@ -3,15 +3,20 @@ import * as z from "zod";
 
 import { Heading } from "@/components/ui/heading";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from "@/components/ui/form";
-
+import axios from 'axios';
 import { MessageSquare } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { formSchema } from "./constants";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 
 const ConversationPage = () => {
+    const router = useRouter();
+    const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -22,7 +27,31 @@ const ConversationPage = () => {
     const isLoading = form.formState.isSubmitting;
 
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
-        console.log(values);
+        try {
+            const userMessage: ChatCompletionMessageParam = { 
+                role: 'user',
+                content: values.prompt
+            };
+
+            const newMessages = [...messages, userMessage];
+
+            const response = await axios.post("/api/conversation", {
+                messages: newMessages
+            })
+
+            setMessages((current) => [...current, userMessage, response.data]);
+
+            form.reset();
+        }
+        catch (error: any) {
+            // TODO: Open Pro Model
+            console.log(error);
+        }
+        finally {
+            router.refresh();
+        }
+
+        // console.log(values);
     }
 
     return (
