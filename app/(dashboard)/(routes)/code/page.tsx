@@ -12,6 +12,8 @@ import { BotAvatar } from "@/components/bot-avatar";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 
+import ReactMarkdown from 'react-markdown';
+
 import axios from 'axios';
 import { Code } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -19,6 +21,7 @@ import { formSchema } from "./constants";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
+import { MessagesPage } from "openai/resources/beta/threads/messages.mjs";
 
 const CodePage = () => {
     const router = useRouter();
@@ -128,9 +131,9 @@ const CodePage = () => {
                             )}
                             >
                                 {message.role === "user"? <UserAvatar /> : <BotAvatar />}
-                                <p className="text-sm">
-                                    {message.content}
-                                </p>
+                                <ReactMarkdown>
+                                    {message.content || ""}
+                                </ReactMarkdown>
                             </div>
                         ))}
                     </div>
