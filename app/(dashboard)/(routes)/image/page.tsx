@@ -13,14 +13,14 @@ import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import axios from 'axios';
-import { MessageSquare } from "lucide-react";
+import { ImageIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { formSchema } from "./constants";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 
-const ConversationPage = () => {
+const ImagePage = () => {
     const router = useRouter();
     const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
     const form = useForm<z.infer<typeof formSchema>>({
@@ -41,7 +41,7 @@ const ConversationPage = () => {
 
             const newMessages = [...messages, userMessage];
 
-            const response = await axios.post("/api/conversation", {
+            const response = await axios.post("/api/image", {
                 messages: newMessages
             })
 
@@ -62,11 +62,11 @@ const ConversationPage = () => {
     return (
         <div>
             <Heading
-                title="Conversation"
-                description="Our most advanced Conversation model"
-                icon={MessageSquare}
-                iconColor="text-violet-500"
-                bgColor="bg-violet-500/10"
+                title="Image Generation"
+                description="Turn your prompt into an image."
+                icon={ImageIcon}
+                iconColor="text-pink-700"
+                bgColor="bg-pink-700/10"
             />
             <div className="px-4 lg:px-8">
                 <div>
@@ -142,4 +142,4 @@ const ConversationPage = () => {
     );
 }
 
-export default ConversationPage;
+export default ImagePage;
