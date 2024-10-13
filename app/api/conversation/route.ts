@@ -1,8 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { OpenAI } from "openai";
-// import OpenAIApi from 'openai';
-// import Configuration from 'openai';
 
 
 
