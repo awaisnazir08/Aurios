@@ -1,21 +1,24 @@
 "use client";
 import * as z from "zod";
 
-import { Heading } from "@/components/heading";
 import { Form, FormControl, FormDescription, FormField, FormItem, FormMessage } from "@/components/ui/form";
+import { Heading } from "@/components/heading";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Empty } from "@/components/empty";
+import { Loader } from "@/components/loader";
+import { UserAvatar } from "@/components/user-avatar";
+import { BotAvatar } from "@/components/bot-avatar";
+import { cn } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+
 import axios from 'axios';
 import { MessageSquare } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { formSchema } from "./constants";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
-import { Empty } from "@/components/empty";
-import { Loader } from "@/components/loader";
-import { cn } from "@/lib/utils";
 
 const ConversationPage = () => {
     const router = useRouter();
@@ -127,7 +130,10 @@ const ConversationPage = () => {
                                 message.role === 'user'? 'bg-white border border-black/10': "bg-muted"
                             )}
                             >
-                                {message.content}
+                                {message.role === "user"? <UserAvatar /> : <BotAvatar />}
+                                <p className="text-sm">
+                                    {message.content}
+                                </p>
                             </div>
                         ))}
                     </div>
