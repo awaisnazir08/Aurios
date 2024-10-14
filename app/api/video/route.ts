@@ -22,17 +22,19 @@ export async function POST(req: Request) {
         }
 
         const input = {
-            prompt_b: prompt
+            prompt: prompt,
+            duration: 1,
+            frames_per_second: 24
         };
-
-        const response = await replicate.run("riffusion/riffusion:8cf61ea6c56afd61d8f5b9ffd14d7c216c0a93844ce2d82ac1c9ecc9c7f24e05", { input });
-        console.log(response);
+        
+        const response = await replicate.run("zsxkib/pyramid-flow:8e221e66498a52bb3a928a4b49d85379c99ca60fec41511265deec35d547c1fb", { input });
+        console.log(response)
 
         return NextResponse.json(response);
     } 
     catch (error) 
     {
-        console.log("[MUSIC_ERROR]", error);
+        console.log("[VIDEO_ERROR]", error);
         return new NextResponse("Internal error", {status: 500})
     }
 }
