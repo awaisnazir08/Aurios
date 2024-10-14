@@ -19,7 +19,6 @@ const MobileSidebar = () => {
 
     return (
         <Sheet>
-            {/* Wrap the Button with a div or span to avoid the nested button issue */}
             <SheetTrigger asChild>
                 <div>
                     <Button variant='ghost' size='icon' className="md:hidden">
