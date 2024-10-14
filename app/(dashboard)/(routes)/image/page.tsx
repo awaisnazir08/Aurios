@@ -35,12 +35,12 @@ const ImagePage = () => {
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         try {
             setImages([]);
+            console.log(values);
+            // const response = await axios.post("/api/image", values);
 
-            const response = await axios.post("/api/image", values);
+            // const urls = response.data.map((image: { url: string }) => image.url);
 
-            const urls = response.data.map((image: { url: string }) => image.url);
-
-            setImages(urls);
+            // setImages(urls);
 
             form.reset();
         }
@@ -98,7 +98,7 @@ const ImagePage = () => {
                                     </FormItem>
                                 )}
                             />
-                            <FormField 
+                            <FormField
                             name = 'amount'
                             control={form.control}
                             render = {({ field }) => (
