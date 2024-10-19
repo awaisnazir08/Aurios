@@ -15,3 +15,11 @@ datasource db {
   // uncomment next line if you use Prisma <5.10
   // directUrl = env("DATABASE_URL_UNPOOLED")
 }
+
+model UserApiLimit {
+  id String @id @default(cuid())
+  userId String @unique
+  count Int @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
