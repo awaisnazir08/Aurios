@@ -53,7 +53,7 @@ const CodePage = () => {
         //     } else {
         //         toast.error("Something went wrong.");
         //     }
-        // } finally {
+        } finally {
             router.refresh();
         }
     }
