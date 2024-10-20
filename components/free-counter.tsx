@@ -15,6 +15,10 @@ export const FreeCounter = ({
     useEffect(() => {
         setMounted(true);
     }, []);
+
+    if (!mounted) {
+        return null;
+    }
     return (
         <div>
             Free Counter
