@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Empty } from "@/components/empty";
 import { Loader } from "@/components/loader";
-import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import axios from 'axios';
@@ -16,8 +15,10 @@ import { useForm } from "react-hook-form";
 import { formSchema } from "./constants";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useProModal } from "@/hooks/use-pro-modal";
 
 const VideoPage = () => {
+    const proModal = useProModal();
     const router = useRouter();
     const [video, setVideo] = useState<string>();
     const form = useForm<z.infer<typeof formSchema>>({
@@ -34,13 +35,16 @@ const VideoPage = () => {
             setVideo(undefined);
 
             const response = await axios.post("/api/video", values);
-
+            
+            console.log(response);
             setVideo(response.data[0]);
 
             form.reset();
         }
         catch (error: any) {
-            // TODO: Open Pro Model
+            if (error?.response?.status === 403) {
+                proModal.onOpen();
+            }
             console.log(error);
         }
         finally {

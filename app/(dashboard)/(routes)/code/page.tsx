@@ -23,10 +23,11 @@ import { UserAvatar } from "@/components/user-avatar";
 import { formSchema } from "./constants";
 import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
 import { Empty } from "@/components/empty";
+import { useProModal } from "@/hooks/use-pro-modal";
 
 const CodePage = () => {
     const router = useRouter();
-    // const proModal = useProModal();
+    const proModal = useProModal();
     const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -48,11 +49,12 @@ const CodePage = () => {
 
             form.reset();
         } catch (error: any) {
-        //     if (error?.response?.status === 403) {
-        //         proModal.onOpen();
-        //     } else {
-        //         toast.error("Something went wrong.");
-        //     }
+            if (error?.response?.status === 403) {
+                proModal.onOpen();
+            } 
+            // else {
+            //     toast.error("Something went wrong.");
+            // }
         } finally {
             router.refresh();
         }

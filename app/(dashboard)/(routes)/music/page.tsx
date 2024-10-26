@@ -16,9 +16,11 @@ import { useForm } from "react-hook-form";
 import { formSchema } from "./constants";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
+import { useProModal } from "@/hooks/use-pro-modal";
 
 const MusicPage = () => {
+    const proModal = useProModal();
+
     const router = useRouter();
     const [music, setMusic] = useState<string>();
     const form = useForm<z.infer<typeof formSchema>>({
@@ -41,7 +43,9 @@ const MusicPage = () => {
             form.reset();
         }
         catch (error: any) {
-            // TODO: Open Pro Model
+            if (error?.response?.status === 403) {
+                proModal.onOpen();
+            }   
             console.log(error);
         }
         finally {
