@@ -3,7 +3,7 @@
 
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
+// everytime we update this file, we need to close our application, then we need to run: npx prisma generate; and then finally run: npx prisma db push  , then rerun the application
 generator client {
   provider = "prisma-client-js"
 }
@@ -22,4 +22,13 @@ model UserApiLimit {
   count Int @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model UserSubscription {
+  id String @id @default(cuid())
+  userId String @unique
+  stripeCustomerId String? @unique @map(name: "stripe_customer_id")
+  stripeSubscriptionId String? @unique @map(name: "stripe_subscription_id")
+  stripePriceId String? @map(name: "stripe_price_id")
+  stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
 }
