@@ -19,8 +19,10 @@ import { formSchema } from "./constants";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ChatCompletionMessageParam } from "openai/resources/index.mjs";
+import { useProModal } from "@/hooks/use-pro-modal";
 
 const ConversationPage = () => {
+    const proModal = useProModal();
     const router = useRouter();
     const [messages, setMessages] = useState<ChatCompletionMessageParam[]>([]);
     const form = useForm<z.infer<typeof formSchema>>({
@@ -50,7 +52,9 @@ const ConversationPage = () => {
             form.reset();
         }
         catch (error: any) {
-            // TODO: Open Pro Model
+            if (error?.response?.status === 403) {
+                proModal.onOpen();
+            }
             console.log(error);
         }
         finally {
