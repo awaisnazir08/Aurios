@@ -7,6 +7,7 @@ import { Check, Code, ImageIcon, MessageSquare, Music, VideoIcon, Zap } from "lu
 import { Card } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 
 const tools = [
     {
@@ -44,6 +45,11 @@ const tools = [
 
 export const ProModal = () => {
 
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
     const proModal = useProModal();
 
     return (
